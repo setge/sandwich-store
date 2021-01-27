@@ -9,7 +9,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(HomeController.class) // HomeController의 웹 페이지 테스트
+@WebMvcTest
 public class HomeControllerTest {
 
     @Autowired

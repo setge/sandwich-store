@@ -3,14 +3,24 @@ package com.setge.sandwichstore.domain;
 import lombok.Data;
 import org.hibernate.validator.constraints.CreditCardNumber;
 
+import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
-public class Order {
+@Entity
+@Table(name="Sandwich_Order")
+public class Order implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id; // 식별하기 위한 id
     private Date placedAt; // 주문일
 
@@ -26,7 +36,8 @@ public class Order {
 //    @NotBlank(message = "")
 //    private String deliveryCity;
 //    private String deliveryState;
-//    private String deliveryZip;
+    @NotBlank(message = "우쳔번호를 입력해주세요.")
+    private String deliveryZip;
 
     @CreditCardNumber(message = "카드번호가 유효하지 않습니다.")
     private String ccNumber;
@@ -36,5 +47,18 @@ public class Order {
 
     @Digits(integer = 3, fraction = 0, message = "잘못된 CVV입니다.")
     private String ccCVV;
+
+    @ManyToMany(targetEntity = Sandwich.class)
+    private List<Sandwich> sandwichs = new ArrayList<>(); // 사용자가 선택한 토핑된 샌드위치를 리스트에 저장(여러개 일 수 있으므로)
+
+    public void addDesign(Sandwich design) {
+        this.sandwichs.add(design);
+    }
+
+    @PrePersist
+    void placeAt() {
+        this.placedAt = new Date();
+
+    }
 
 }

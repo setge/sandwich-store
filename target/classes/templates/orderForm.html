@@ -15,6 +15,12 @@
         <img th:src="@{/images/SandwichStore.png}"/>
         <a th:href="@{/design}" id="another">샌드위치 토핑 다시 하기</a><br/>
 
+        <ul>
+            <li th:each="sandwich : ${order.sandwichs}">
+                <span th:text="${sandwich.name}">sandwich name</span>
+            </li>
+        </ul>
+
         <div th:if="${#fields.hasErrors()}">
             <span class="validationError">
                 아래 정보를 다시 입력 후, 주문해주세요!.
@@ -28,6 +34,13 @@
         <span class="validationError"
               th:if="${#fields.hasErrors('deliveryName')}"
               th:errors="*{deliveryName}">Name Error</span>
+        <br/>
+
+        <label for="deliveryZip">우편번호 : </label>
+        <input type="text" th:field="*{deliveryZip}"/>
+        <span class="validationError"
+              th:if="${#fields.hasErrors('deliveryZip')}"
+              th:errors="*{deliveryZip}">Zip Error</span>
         <br/>
 
         <label for="deliveryStreet">주소 : </label>
@@ -50,10 +63,6 @@
 
 <!--        <label for="deliveryState">State : </label>-->
 <!--        <input type="text" th:field="*{deliveryState}"/>-->
-<!--        <br/>-->
-
-<!--        <label for="deliveryZip">Zip code : </label>-->
-<!--        <input type="text" th:field="*{deliveryZip}"/>-->
 <!--        <br/>-->
 
         <h3>결제</h3>

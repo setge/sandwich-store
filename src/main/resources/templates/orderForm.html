@@ -9,11 +9,16 @@
 </head>
 <body>
 
-    <form method="POST" th:action="@{/orders}" th:object="${order}">
+    <form method="post" th:action="@{/logout}" id="logoutForm">
+        <input type="submit" value="Logout">
+    </form>
+
+    <form method="POST" th:action="@{/orders}" th:object="${order}" id="orderForm">
         <h1>Order your sandwich creation!</h1>
 
         <img th:src="@{/images/SandwichStore.png}"/>
-        <a th:href="@{/design}" id="another">샌드위치 토핑 다시 하기</a><br/>
+        <h3>직접 토핑한 샌드위치 목록</h3>
+        <a th:href="@{/design}" id="another">샌드위치 추가하기</a><br/>
 
         <ul>
             <li th:each="sandwich : ${order.sandwichs}">
@@ -29,7 +34,7 @@
 
         <h3>주문자 정보 입력</h3>
 
-        <label for="deliveryName">이름: </label>
+        <label for="deliveryName">아이디: </label>
         <input type="text" th:field="*{deliveryName}"/>
         <span class="validationError"
               th:if="${#fields.hasErrors('deliveryName')}"
@@ -48,6 +53,13 @@
         <span class="validationError"
               th:if="${#fields.hasErrors('deliveryStreet')}"
               th:errors="*{deliveryStreet}">Street Error</span>
+        <br/>
+
+        <label for="deliveryFullname">이름 : </label>
+        <input type="text" th:field="*{deliveryFullname}"/>
+        <span class="validationError"
+              th:if="${#fields.hasErrors('deliveryFullname')}"
+              th:errors="*{deliveryFullname}">Street Error</span>
         <br/>
 
         <label for="deliverPhone">연락처 : </label>

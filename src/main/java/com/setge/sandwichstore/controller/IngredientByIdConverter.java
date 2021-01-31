@@ -1,4 +1,4 @@
-package com.setge.sandwichstore.web;
+package com.setge.sandwichstore.controller;
 
 import com.setge.sandwichstore.data.IngredientRepository;
 import com.setge.sandwichstore.domain.Ingredient;

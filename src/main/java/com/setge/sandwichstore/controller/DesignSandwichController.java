@@ -1,40 +1,41 @@
-package com.setge.sandwichstore.web;
+package com.setge.sandwichstore.controller;
 
 import com.setge.sandwichstore.data.IngredientRepository;
 import com.setge.sandwichstore.data.SandwichRepository;
+import com.setge.sandwichstore.data.UserRepository;
 import com.setge.sandwichstore.domain.Ingredient;
 import com.setge.sandwichstore.domain.Ingredient.Type;
 import com.setge.sandwichstore.domain.Order;
 import com.setge.sandwichstore.domain.Sandwich;
+import com.setge.sandwichstore.domain.User;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/design")
 @SessionAttributes("order")
 public class DesignSandwichController {
 
     private final IngredientRepository ingredientsRepository;
-    private SandwichRepository sandwichRepository;
-
-    public DesignSandwichController(IngredientRepository ingredientsRepository,
-                                    SandwichRepository sandwichRepository) {
-        this.ingredientsRepository = ingredientsRepository;
-        this.sandwichRepository = sandwichRepository;
-    }
+    private final SandwichRepository sandwichRepository;
+    private final UserRepository userRepository;
 
     @GetMapping
-    public String showDesignForm(Model model) {
+    public String showDesignForm(Model model, Principal principal) {
 
         List<Ingredient> ingredients = new ArrayList<>();
         ingredientsRepository.findAll().forEach(ingredients::add);
@@ -45,7 +46,9 @@ public class DesignSandwichController {
             model.addAttribute(type.toString().toLowerCase(), filterByType(ingredients, type));
         }
 
-        model.addAttribute("sandwich", new Sandwich());
+        String username = principal.getName();
+        User user = userRepository.findByUsername(username);
+        model.addAttribute("user", user);
 
         return "design";
     }

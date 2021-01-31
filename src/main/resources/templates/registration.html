@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sandwich Store</title>
+</head>
+<body>
+
+    <h1>회원가입</h1>
+    <img th:src="@{/images/SandwichStore.png}" />
+    <form method="post" th:action="@{/register}" id="registerForm">
+
+        <label for="아이디">ID : </label>
+        <input type="text" name="username"/><br/>
+
+        <label for="비밀번호">비밀번호 : </label>
+        <input type="password" name="password" /><br/>
+
+        <label for="confirm">비밀번호 확인 : </label>
+        <input type="password" name="confirm" /><br/>
+
+        <label for="주소">주소 : </label>
+        <input type="text" name="street" /><br>
+
+        <label for="zip">우편번호 : </label>
+        <input type="text" name="zip" /> <br/>
+
+        <label for="fullname">이름 : </label>
+        <input type="text" name="fullname"><br/>
+
+        <label for="phone">휴대폰 : </label>
+        <input type="text" name="phone" /> <br/>
+
+        <input type="submit" value="가입하기">
+    </form>
+
+</body>
+</html>

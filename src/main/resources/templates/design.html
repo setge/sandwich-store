@@ -8,10 +8,15 @@
 </head>
 
 <body>
-<h1>Design your sandwich!</h1>
+<h1>샌드위치를 원하는 재료로 토핑해주세요!</h1>
+<h2>배고프신가요?, <span th:text="${user.username}">NAME</span></h2>
 <img th:src="@{/images/SandwichStore.png}"/>
 
-<form method="POST" th:object="${sandwich}">
+<form method="post" th:action="@{/logout}" id="logoutForm">
+    <input type="submit" value="Logout">
+</form>
+
+<form method="POST" th:object="${sandwich}" th:action="@{/design}" id="sandwichFrom">
 
     <span class="validationError"
           th:if="${#fields.hasErrors('ingredients')}"

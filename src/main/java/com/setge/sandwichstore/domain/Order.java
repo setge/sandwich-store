@@ -24,11 +24,20 @@ public class Order implements Serializable {
     private Long id; // 식별하기 위한 id
     private Date placedAt; // 주문일
 
-    @NotBlank(message = "이름을 입력해주세요")
+    @ManyToOne
+    private User user;
+
+    @NotBlank(message = "아이디를 입력해주세요")
     private String deliveryName;
+
+    @NotBlank(message = "우편번호를 입력해주세요.")
+    private String deliveryZip;
 
     @NotBlank(message = "주소를 입력해주세요")
     private String deliveryStreet;
+
+    @NotBlank(message = "이름을 입력해주세요")
+    private String deliveryFullname;
 
     @NotBlank(message = "연락처를 입력해주세요")
     private String deliveryPhone;
@@ -36,8 +45,7 @@ public class Order implements Serializable {
 //    @NotBlank(message = "")
 //    private String deliveryCity;
 //    private String deliveryState;
-    @NotBlank(message = "우쳔번호를 입력해주세요.")
-    private String deliveryZip;
+
 
     @CreditCardNumber(message = "카드번호가 유효하지 않습니다.")
     private String ccNumber;

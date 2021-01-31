@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인</title>
+</head>
+<body>
+
+    <h1>로그인</h1>
+    <img th:src="@{/images/SandwichStore.png}" />
+
+    <form method="post" th:action="@{/logout}" id="logoutForm">
+        <input type="submit" value="Logout">
+    </form>
+
+    <a th:href="@{/design}" id="design">샌드위치 만들기</a>
+
+    <div th:if="${error}">
+        아이디 또는 비밃번호가 다릅니다.
+    </div>
+
+    <p>회원가입하시려면
+    <a th:href="@{/register}">클릭</a>해주세요</p>
+
+    <!--tag::thAction[] -->
+    <form method="post" th:action="@{/login}" id="loginForm">
+    <!-- end:thAction[] -->
+
+        <label for="ID">ID : </label>
+        <input type="text" name="username" id="username"><br/>
+
+        <label for="Password">Password : </label>
+        <input type="password" name="password" id="password"><br/>
+
+        <input type="submit" value="Login" />
+    </form>
+
+</body>
+</html>

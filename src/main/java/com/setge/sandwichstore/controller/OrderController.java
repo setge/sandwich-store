@@ -3,7 +3,10 @@ package com.setge.sandwichstore.controller;
 import com.setge.sandwichstore.data.OrderRepository;
 import com.setge.sandwichstore.domain.Order;
 import com.setge.sandwichstore.domain.User;
+import com.setge.sandwichstore.web.OrderProps;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,10 +22,14 @@ import javax.validation.Valid;
 @SessionAttributes("order")
 public class OrderController {
 
-    private OrderRepository orderRepository;
 
-    public OrderController(OrderRepository orderRepository) {
+    private OrderRepository orderRepository;
+    private OrderProps props;
+
+    public OrderController(OrderRepository orderRepository,
+                           OrderProps props) {
         this.orderRepository = orderRepository;
+        this.props = props;
     }
 
     @GetMapping("/current")
@@ -58,5 +65,14 @@ public class OrderController {
         sessionStatus.setComplete();
 
         return "redirect:/";
+    }
+
+    @GetMapping
+    public String ordersForUser(@AuthenticationPrincipal User user, Model model) {
+        Pageable pageable = PageRequest.of(0, props.getPageSize());
+
+        model.addAttribute("orders", orderRepository.findByUserOrderByPlacedAtDesc(user, pageable));
+
+        return "orderList";
     }
 }

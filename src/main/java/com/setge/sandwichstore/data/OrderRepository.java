@@ -1,9 +1,12 @@
 package com.setge.sandwichstore.data;
 
 import com.setge.sandwichstore.domain.Order;
-import org.aspectj.weaver.ast.Or;
+import com.setge.sandwichstore.domain.User;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 
-public interface OrderRepository extends CrudRepository<Order,Long> {
+import java.util.List;
 
+public interface OrderRepository extends CrudRepository<Order,Long> {
+    List<Order> findByUserOrderByPlacedAtDesc(User user, Pageable pageable);
 }
